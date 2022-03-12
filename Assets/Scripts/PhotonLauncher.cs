@@ -13,6 +13,8 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
     [SerializeField] private string nickName = string.Empty;
 
+    public InputField nickNameField;
+
     [SerializeField] private Button connectButton = null;
 
     private void Awake()
