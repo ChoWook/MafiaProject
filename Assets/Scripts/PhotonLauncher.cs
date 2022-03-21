@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class PhotonLauncher : MonoBehaviourPunCallbacks
 {
@@ -85,6 +86,9 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined Room");
+
+        // 나중에 씬 이름 바꿔야 함
+        SceneManager.LoadScene("TmpScene");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
