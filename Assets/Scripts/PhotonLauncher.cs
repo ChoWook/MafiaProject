@@ -54,6 +54,11 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         }
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
     // InputField_NickName과 연결해 닉네임을 가져옴
     public void OnValueChangedNickName(string _nickName)
     {
@@ -88,12 +93,12 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         Debug.Log("Joined Room");
 
         // 나중에 씬 이름 바꿔야 함
-        SceneManager.LoadScene("TmpScene");
+        SceneManager.LoadScene("Village");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.LogErrorFormat("JoinRandomFailed({0}): {1}", returnCode, message);
+        //Debug.LogErrorFormat("JoinRandomFailed({0}): {1}", returnCode, message);
 
         connectButton.interactable = true;
 

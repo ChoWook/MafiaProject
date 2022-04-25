@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PhotonLauncher.unity
+    guid: 75899d921d55625408cf31295baff23d
+  - enabled: 1
+    path: Assets/Scenes/Village.unity
+    guid: 6f9c863104998ec4cb61ab52d018c0d1
   m_configObjects: {}

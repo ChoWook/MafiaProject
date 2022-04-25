@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class PlayerControl : Photon.Pun.MonoBehaviourPun
 {
-    [SerializeField] public float speedM = 5.0f;
-    [SerializeField] public float speedH = 0.1f;
-    [SerializeField] public float speedV = 0.1f;
+    [SerializeField] private float speedM = 5.0f;
+    [SerializeField] private float speedH = 0.1f;
+    [SerializeField] private float speedV = 0.1f;
 
     //점프 관련 변수들
-    [SerializeField] public float jumpForce = 5.0f;
-    [SerializeField] public Transform groundCheckTransform;
-    [SerializeField] public LayerMask ground;
+    [SerializeField] private float jumpForce = 5.0f;
+    [SerializeField] private Transform groundCheckTransform;
+    [SerializeField] private LayerMask ground;
 
     private Vector2 moveInput;
     private Vector3 moveVec;
@@ -29,8 +29,8 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     private void Awake()
     {
         body = GetComponent<Rigidbody>();
-        NicknameText = GetComponent<TextMesh>();
-
+        NicknameText = GetComponentInChildren<TextMesh>();
+        
         Cursor.lockState = CursorLockMode.Locked;
         
     }
@@ -41,7 +41,8 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
         {
             return;
         }
-
+        
+        body.velocity = new Vector3(0, body.velocity.y, 0); // 서있을 때 미끄러지는 것 방지
         moveVec = moveInput.x * transform.right + moveInput.y * transform.forward;
         transform.position = transform.position + moveVec * Time.fixedDeltaTime * speedM;
     }
@@ -85,9 +86,10 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
 
     public void SetMaterial(int _playerNum)
     {
-        Debug.LogError(_playerNum + " : " + colors.Length);
+        Debug.Log(_playerNum + " : " + colors.Length);
         if (_playerNum > colors.Length) return;
         // 색상
+        
         this.GetComponent<MeshRenderer>().material.color = colors[_playerNum - 1];
         NicknameText.color = colors[_playerNum - 1];
     }
