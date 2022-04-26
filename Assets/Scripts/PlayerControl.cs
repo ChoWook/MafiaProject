@@ -9,6 +9,7 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     [SerializeField] private float speedM = 5.0f;
     [SerializeField] private float speedH = 0.1f;
     [SerializeField] private float speedV = 0.1f;
+    
 
     //점프 관련 변수들
     [SerializeField] private float jumpForce = 5.0f;
@@ -19,6 +20,7 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     private Vector3 moveVec;
     private Rigidbody body;
     private TextMesh NicknameText;
+    private Camera playerCamera;
     private float yaw = 0.0f;
     private float pitch = 0.0f;
     private float movementX, movementY;
@@ -30,9 +32,11 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     {
         body = GetComponent<Rigidbody>();
         NicknameText = GetComponentInChildren<TextMesh>();
-        
+        playerCamera = GetComponentInChildren<Camera>();
+
+
         Cursor.lockState = CursorLockMode.Locked;
-        
+    
     }
 
     private void FixedUpdate()
@@ -57,7 +61,8 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
         yaw += speedH * movementX;
         pitch -= speedV * movementY;
 
-        transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+        transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+        playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
 
     public void OnMove(InputValue input)
