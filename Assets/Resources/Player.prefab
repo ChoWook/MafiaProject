@@ -272,6 +272,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 256
+  playerCamera: {fileID: 5239028125395257735}
   colors:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0, g: 0.0377028, b: 1, a: 0}

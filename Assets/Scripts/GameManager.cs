@@ -21,6 +21,7 @@ public class GameManager : Photon.Pun.MonoBehaviourPun
             // 플레이어 색상 정함, 동기화 안되어있어서 자신의 색만 바뀜
             go.GetComponent<PlayerControl>().SetMaterial(PhotonNetwork.PlayerList.Length);
             go.GetComponent<PlayerControl>().NicknameDisplay(PhotonNetwork.NickName);
+
         }
     }
 }

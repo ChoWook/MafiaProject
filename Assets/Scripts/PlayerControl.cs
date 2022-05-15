@@ -20,11 +20,11 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     private Vector3 moveVec;
     private Rigidbody body;
     private TextMesh NicknameText;
-    private Camera playerCamera;
     private float yaw = 0.0f;
     private float pitch = 0.0f;
     private float movementX, movementY;
 
+    [SerializeField] private GameObject playerCamera;
     [SerializeField] private Color[] colors = null;
 
 
@@ -32,11 +32,13 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     {
         body = GetComponent<Rigidbody>();
         NicknameText = GetComponentInChildren<TextMesh>();
-        playerCamera = GetComponentInChildren<Camera>();
-
 
         Cursor.lockState = CursorLockMode.Locked;
-    
+
+        if (!photonView.IsMine)
+        {
+            playerCamera.SetActive(false);
+        }
     }
 
     private void FixedUpdate()
