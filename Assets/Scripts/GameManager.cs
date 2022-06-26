@@ -10,6 +10,7 @@ public class GameManager : Photon.Pun.MonoBehaviourPun
 
     private void Start()
     {
+        
         if (playerPrefab != null)
         {
             // 포톤네트워크에 있는 인스턴시에이트, 방에 있는 모든 유저에게 프리팹 만들어줌

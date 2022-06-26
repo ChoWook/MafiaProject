@@ -19,10 +19,11 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     private Vector2 moveInput;
     private Vector3 moveVec;
     private Rigidbody body;
+    private Animator animator;
     private TextMesh NicknameText;
     private float yaw = 0.0f;
     private float pitch = 0.0f;
-    private float movementX, movementY;
+    private float cameraMovementX, cameraMovementY;
 
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private Color[] colors = null;
@@ -31,6 +32,7 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     private void Awake()
     {
         body = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         NicknameText = GetComponentInChildren<TextMesh>();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -48,9 +50,21 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
             return;
         }
         
+        if(body == null)
+        {
+            return;
+        }
         body.velocity = new Vector3(0, body.velocity.y, 0); // 서있을 때 미끄러지는 것 방지
+
+        
         moveVec = moveInput.x * transform.right + moveInput.y * transform.forward;
         transform.position = transform.position + moveVec * Time.fixedDeltaTime * speedM;
+
+        if (moveInput.x == 0 && moveInput.y == 0)
+        {
+            animator.SetBool("IsRun", false);
+            return;
+        }
     }
 
     private void Update()
@@ -60,8 +74,8 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
             return;
         }
 
-        yaw += speedH * movementX;
-        pitch -= speedV * movementY;
+        yaw += speedH * cameraMovementX;
+        pitch -= speedV * cameraMovementY;
 
         transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
         playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
@@ -69,6 +83,7 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
 
     public void OnMove(InputValue input)
     {
+        animator.SetBool("IsRun", true);
         moveInput = input.Get<Vector2>();
     }
 
@@ -76,8 +91,8 @@ public class PlayerControl : Photon.Pun.MonoBehaviourPun
     {
         Vector2 movementVector = input.Get<Vector2>();
 
-        movementX = movementVector.x;
-        movementY = movementVector.y;
+        cameraMovementX = movementVector.x;
+        cameraMovementY = movementVector.y;
     }
 
     public void OnJump(InputValue input)
